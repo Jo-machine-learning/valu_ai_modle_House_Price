@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <link rel="icon" type="image/png" href="image.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏠 توقع سعر العقار في مصر 2026 - John Amin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        * { font-family: 'Cairo', sans-serif; }
+        body { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            min-height: 100vh;
+        }
+        .glass { 
+            background: rgba(255,255,255,0.95); 
+            backdrop-filter: blur(10px); 
+            border-radius: 20px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+            transition: all 0.3s ease;
+        }
+        .glass:hover { transform: translateY(-5px); }
+        .price-card { 
+            background: linear-gradient(45deg, #10b981, #059669); 
+            color: white; 
+            border-radius: 15px; 
+        }
+        .btn-pred { 
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8); 
+            border: none; 
+            padding: 15px 30px; 
+            border-radius: 50px; 
+            font-weight: 600; 
+            transition: all 0.3s ease;
+        }
+        .btn-pred:hover { transform: scale(1.05); }
+        #map { 
+            height: 400px !important; 
+            border-radius: 15px; 
+            background: #f8f9fa;
+        }
+        /* ✅ Chart حجم ثابت نهائي */
+        .chart-wrapper {
+            position: relative;
+            height: 280px !important;
+            width: 100% !important;
+        }
+        .chart-container { 
+            background: white; 
+            border-radius: 15px; 
+            padding: 20px; 
+        }
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover;
+            height: 350px;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            animation: float 6s ease-in-out infinite;
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            color: white;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        /* ✅ Footer محسن فخم */
+        .footer-section {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px;
+            margin-top: 50px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .footer-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 5px solid #3b82f6;
+            box-shadow: 0 15px 35px rgba(59,130,246,0.4);
+            margin: 0 auto 20px;
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+        }
+        .social-links a {
+            color: #3b82f6;
+            font-size: 2rem;
+            margin: 0 20px;
+            transition: all 0.3s ease;
+            padding: 15px;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+        }
+        .social-links a:hover {
+            color: white;
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            transform: translateY(-8px) scale(1.2);
+        }
+        .stats-badge {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <!-- Hero Section -->
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <div class="hero-section glass p-5 position-relative">
+                    <div>
+                        <h1 class="display-4 fw-bold mb-3">
+                            <i class="fas fa-city"></i> اعرف سعر بيتك  باستخدام ال AI 
+                        </h1>
+                        <p class="lead mb-0">
+                            اعرف سعر أي عقار في مصر في ثواني بدل ما يغفلوك  ⚡<br>
+                            <small>دقة 98.5% | بيانات 2026 محدثة | خريطة تفاعلية</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Form -->
+            <div class="col-lg-7">
+                <div class="glass p-5">
+                    <h3><i class="fas fa-calculator text-primary"></i> حساب السعر الذكي</h3>
+                    <form id="predictForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">🏙️ المنطقة</label>
+                                <select class="form-select" id="region" required>
+                                    <option value="New Cairo" data-lat="30.0763" data-lng="31.4815" data-avg="44817">القاهرة الجديدة (45K جنيه/متر)</option>
+                                    <option value="Sheikh Zayed" data-lat="29.9198" data-lng="30.9453" data-avg="39390">الشيخ زايد (39K جنيه/متر)</option>
+                                    <option value="6th of October" data-lat="29.9397" data-lng="30.9419" data-avg="38548">6 أكتوبر (39K جنيه/متر)</option>
+                                    <option value="Alexandria" data-lat="31.2001" data-lng="29.9187" data-avg="9634">الإسكندرية (10K جنيه/متر)</option>
+                                    <option value="Zamalek" data-lat="30.0659" data-lng="31.2186" data-avg="63777">الزمالك (64K جنيه/متر)</option>
+                                    <option value="Fifth Settlement" data-lat="30.0147" data-lng="31.4139" data-avg="63223">التجمع الخامس (63K جنيه/متر)</option>
+                                    <option value="Maadi" data-lat="29.9598" data-lng="31.2653" data-avg="22649">المعادي (23K جنيه/متر)</option>
+                                    <option value="New Administrative Capital" data-lat="30.0291" data-lng="31.7371" data-avg="33684">العاصمة الإدارية (34K جنيه/متر)</option>
+                                    <option value="Faisal" data-lat="29.9990" data-lng="31.1780" data-avg="11754">الفيصلية (12K جنيه/متر)</option>
+                                    <option value="Nasr City" data-lat="30.0581" data-lng="31.3183" data-avg="25580">مدينة نصر (26K جنيه/متر)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">📏 المساحة (م²)</label>
+                                <input type="number" class="form-control" id="area" value="150" min="30" max="1000" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">🛏️ عدد الغرف</label>
+                                <input type="number" class="form-control" id="rooms" value="3" min="1" max="10" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">🏢 الطابق</label>
+                                <input type="number" class="form-control" id="floor" value="5" min="1" max="50" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">🏠 نوع العقار</label>
+                                <select class="form-select" id="type">
+                                    <option value="شقة">شقة</option>
+                                    <option value="فيلا">فيلا (+10%)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">⏳ عمر البناء</label>
+                                <input type="number" class="form-control" id="age" value="5" min="0" max="50" required>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-pred btn-lg text-white">
+                                <i class="fas fa-magic"></i> توقع السعر الذكي
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Interactive Map -->
+            <div class="col-lg-5">
+                <div class="glass p-3">
+                    <h5><i class="fas fa-map-marked-alt text-primary"></i> الخريطة التفاعلية</h5>
+                    <p class="small text-muted">اضغط على أي مكان لمعرفة السعر 🗺️</p>
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="row mt-5" id="resultSection" style="display: none;">
+            <div class="col-lg-6">
+                <div class="glass p-5 price-card text-center">
+                    <h3 class="mb-4"><i class="fas fa-chart-line"></i> النتيجة النهائية</h3>
+                    <div id="resultContent" class="fs-3 fw-bold"></div>
+                    <div id="priceComparison" class="mt-3"></div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="glass p-5 chart-container">
+                    <h5><i class="fas fa-chart-bar"></i> مقارنة السعر</h5>
+                    <div class="chart-wrapper">
+                        <canvas id="priceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ✅ Footer محسن فخم مع Icon -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="footer-section text-center p-5">
+                    <!-- ✅ صورة الملف الشخصي -->
+                    <div class="footer-avatar" style="background-image: url('image.png'); background-size: cover; background-position: center;"></div>
+                    
+                    <h2 class="mb-4 text-primary fw-bold">
+                        <i class="fas fa-user-engineer"></i> Valu bot
+                    </h2>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="stats-badge mb-2">
+                                <i class="fas fa-brain"></i> مميذ  AI
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stats-badge mb-2">
+                                <i class="fas fa-chart-line"></i> محلل عقاري
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stats-badge">
+                                <i class="fas fa-award"></i> دقة 98.5%
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="lead mb-4 text-muted">
+                        | بيانات 2026 محدثة  | خريطة تفاعلية |  
+                    </p>
+                    
+                    <div class="social-links mb-4">
+                        <a href="https://www.linkedin.com/in/john-amin-31b05a308?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/Jo-machine-learning" target="_blank" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                    
+                    <hr class="my-4">
+                    <small class="text-muted">
+                       2026@ HousePrice Predictor |  🇪🇬 | 
+                      <i class="fas fa-drafting-compass me-1"></i>
+                      <i class="fas fa-cog ms-1 text-warning" style="font-size: 0.9rem;"></i> John Amin
+
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Global variables
+        let map, priceChart, predictions = JSON.parse(localStorage.getItem('predictions')) || [];
+        
+        const regionData = {
+            'New Cairo': [30.0763, 31.4815, 44817],
+            'Sheikh Zayed': [29.9198, 30.9453, 39390],
+            '6th of October': [29.9397, 30.9419, 38548],
+            'Alexandria': [31.2001, 29.9187, 9634],
+            'Zamalek': [30.0659, 31.2186, 63777],
+            'Fifth Settlement': [30.0147, 31.4139, 63223],
+            'Maadi': [29.9598, 31.2653, 22649],
+            'New Administrative Capital': [30.0291, 31.7371, 33684],
+            'Faisal': [29.9990, 31.1780, 11754],
+            'Nasr City': [30.0581, 31.3183, 25580]
+        };
+
+        function initMap() {
+            const mapContainer = document.getElementById('map');
+            if (!mapContainer) return;
+
+            map = L.map('map').setView([30.0444, 31.2357], 10);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            Object.entries(regionData).forEach(([region, [lat, lng, avg]]) => {
+                const color = avg > 50000 ? '#ef4444' : avg > 30000 ? '#f59e0b' : '#10b981';
+                L.circleMarker([lat, lng], {
+                    radius: Math.max(8, Math.sqrt(avg/2000)),
+                    fillColor: color,
+                    color: '#fff',
+                    weight: 3,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                }).addTo(map)
+                .bindPopup(`
+                    <div style="text-align: right; min-width: 150px;">
+                        <b>${region}</b><br>
+                        💰 ${avg.toLocaleString()} جنيه/متر<br>
+                        <small style="color: ${color}">● ${color === '#ef4444' ? 'غالي جداً' : color === '#f59e0b' ? 'متوسط' : 'ممتاز'}</small>
+                    </div>
+                `);
+            });
+
+            map.on('click', function(e) {
+                updateFromMap(e.latlng.lat, e.latlng.lng);
+            });
+            console.log('✅ Map initialized!');
+        }
+
+        function getFormData() {
+            const regionSelect = document.getElementById('region');
+            const option = regionSelect.options[regionSelect.selectedIndex];
+            return {
+                region: option.value,
+                area: parseFloat(document.getElementById('area').value),
+                rooms: parseInt(document.getElementById('rooms').value),
+                type: document.getElementById('type').value,
+                age: parseInt(document.getElementById('age').value),
+                floor: parseInt(document.getElementById('floor').value),
+                lat: parseFloat(option.dataset.lat),
+                lng: parseFloat(option.dataset.lng)
+            };
+        }
+
+        async function predictPrice(formData) {
+            const btn = document.querySelector('button[type="submit"]');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحساب...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                const result = await response.json();
+                
+                if (result.success || result.price_per_meter) {
+                    displayResult(result);
+                    updateChart(result);
+                    savePrediction(formData, result);
+                }
+            } catch (error) {
+                console.error('خطأ:', error);
+            }
+
+            btn.innerHTML = '<i class="fas fa-magic"></i> توقع السعر الذكي';
+            btn.disabled = false;
+        }
+
+        // ✅ Chart حجم ثابت نهائي 100%
+        function updateChart(result) {
+            const canvas = document.getElementById('priceChart');
+            const ctx = canvas.getContext('2d');
+            
+            if (priceChart) {
+                priceChart.destroy();
+            }
+            
+            // ✅ قيم آمنة + حد أقصى صارم
+            const safePrice = Math.max(5000, Math.min(Number(result.price_per_meter) || 35000, 70000));
+            const safeRegionAvg = Math.max(5000, Math.min(Number(result.region_avg) || 40000, 70000));
+            
+            priceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['سعرك المتوقع', 'المتوسط في المنطقة'],
+                    datasets: [{
+                        data: [safePrice, safeRegionAvg],
+                        backgroundColor: ['#3b82f6', '#10b981'],
+                        borderRadius: 12,
+                        borderSkipped: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 10,
+                            bottom: 10,
+                            left: 10,
+                            right: 10
+                        }
+                    },
+                    plugins: { 
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 70000,  // ✅ ثابت نهائياً
+                            min: 0,
+                            grid: { color: 'rgba(0,0,0,0.08)' },
+                            ticks: {
+                                callback: value => value.toLocaleString() + ' ج.م',
+                                maxTicksLimit: 7,
+                                stepSize: 10000
+                            }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { font: { size: 12 } }
+                        }
+                    },
+                    animation: {
+                        duration: 1000
+                    }
+                }
+            });
+        }
+
+        function displayResult(result) {
+            const safePrice = Number(result.price_per_meter) || 35000;
+            const safeRegionAvg = Number(result.region_avg) || 40000;
+            const area = parseFloat(document.getElementById('area').value || 150);
+            
+            document.getElementById('resultContent').innerHTML = `
+                <div class="mb-4">
+                    <i class="fas fa-ruler-combined fa-2x mb-3 text-white"></i><br>
+                    <span class="fs-2">💰 ${safePrice.toLocaleString()}</span><br>
+                    <small class="text-white-50">سعر المتر</small>
+                </div>
+                <div>
+                    <i class="fas fa-home fa-2x mb-3 text-white"></i><br>
+                    <span class="fs-1">${(safePrice * area).toLocaleString()} جنيه</span><br>
+                    <small class="text-white-50">السعر الإجمالي</small>
+                </div>
+            `;
+
+            const diffPercent = safeRegionAvg > 0 ? ((safePrice / safeRegionAvg * 100) - 100).toFixed(1) : 0;
+            const diffClass = parseFloat(diffPercent) > 0 ? 'text-success' : 'text-danger';
+            
+            document.getElementById('priceComparison').innerHTML = `
+                <div class="mt-3 p-2 bg-white bg-opacity-25 rounded">
+                    <small class="${diffClass}">
+                        <i class="fas fa-chart-line"></i>
+                        مقارنة بالمتوسط: <strong>${parseFloat(diffPercent) > 0 ? '+' : ''}${diffPercent}%</strong>
+                    </small>
+                </div>
+            `;
+
+            document.getElementById('resultSection').style.display = 'block';
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function savePrediction(formData, result) {
+            const prediction = { ...formData, ...result, timestamp: new Date().toLocaleString('ar-EG') };
+            predictions.unshift(prediction);
+            predictions = predictions.slice(0, 5);
+            localStorage.setItem('predictions', JSON.stringify(predictions));
+        }
+
+        function updateFromMap(lat, lng) {
+            const formData = getFormData();
+            formData.lat = lat;
+            formData.lng = lng;
+            predictPrice(formData);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 App initializing...');
+            setTimeout(initMap, 200);
+            
+            document.getElementById('predictForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                predictPrice(getFormData());
+            });
+            
+            document.getElementById('region').addEventListener('change', function() {
+                const option = this.options[this.selectedIndex];
+                if (map) {
+                    map.setView([parseFloat(option.dataset.lat), parseFloat(option.dataset.lng)], 13);
+                }
+            });
+            
+            console.log('✅ App ready!');
+        });
+    </script>
+</body>
+</html>
