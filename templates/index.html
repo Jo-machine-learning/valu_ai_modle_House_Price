@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <link rel="icon" type="image/png" href="image.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏠 توقع سعر العقار في مصر 2026 - John Amin</title>
+    <title>🏠 Egypt House Price Predictor 2026 - John Amin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -44,7 +44,6 @@
             border-radius: 15px; 
             background: #f8f9fa;
         }
-        /* ✅ Chart حجم ثابت نهائي */
         .chart-wrapper {
             position: relative;
             height: 280px !important;
@@ -71,7 +70,6 @@
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-15px); }
         }
-        /* ✅ Footer محسن فخم */
         .footer-section {
             background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
             backdrop-filter: blur(20px);
@@ -112,21 +110,53 @@
             font-size: 0.9rem;
             font-weight: 600;
         }
+        /* Language Toggle */
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .lang-btn {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .lang-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .lang-btn.active {
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
     </style>
 </head>
 <body>
+    <!-- Language Toggle Button -->
+    <div class="lang-toggle">
+        <button class="lang-btn active" id="langBtn" onclick="toggleLanguage()">
+            <i class="fas fa-globe"></i> EN
+        </button>
+    </div>
+
     <div class="container py-5">
         <!-- Hero Section -->
         <div class="row text-center mb-5">
             <div class="col-12">
-                <div class="hero-section glass p-5 position-relative">
+                <div class="hero-section glass p-5 position-relative" id="heroSection">
                     <div>
-                        <h1 class="display-4 fw-bold mb-3">
-                            <i class="fas fa-city"></i> اعرف سعر بيتك  باستخدام ال AI 
+                        <h1 class="display-4 fw-bold mb-3" id="heroTitle">
+                            <i class="fas fa-city"></i> Know Your Property Value with AI
                         </h1>
-                        <p class="lead mb-0">
-                            اعرف سعر أي عقار في مصر في ثواني بدل ما يغفلوك  ⚡<br>
-                            <small>دقة 98.5% | بيانات 2026 محدثة | خريطة تفاعلية</small>
+                        <p class="lead mb-0" id="heroText">
+                            Get instant property prices across Egypt in seconds ⚡<br>
+                            <small>98.5% Accuracy | 2026 Updated Data | Interactive Map</small>
                         </p>
                     </div>
                 </div>
@@ -137,51 +167,51 @@
             <!-- Form -->
             <div class="col-lg-7">
                 <div class="glass p-5">
-                    <h3><i class="fas fa-calculator text-primary"></i> حساب السعر الذكي</h3>
+                    <h3 id="formTitle"><i class="fas fa-calculator text-primary"></i> Smart Price Calculator</h3>
                     <form id="predictForm">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label class="form-label fw-bold">🏙️ المنطقة</label>
+                                <label class="form-label fw-bold" id="regionLabel">🏙️ Region</label>
                                 <select class="form-select" id="region" required>
-                                    <option value="New Cairo" data-lat="30.0763" data-lng="31.4815" data-avg="44817">القاهرة الجديدة (45K جنيه/متر)</option>
-                                    <option value="Sheikh Zayed" data-lat="29.9198" data-lng="30.9453" data-avg="39390">الشيخ زايد (39K جنيه/متر)</option>
-                                    <option value="6th of October" data-lat="29.9397" data-lng="30.9419" data-avg="38548">6 أكتوبر (39K جنيه/متر)</option>
-                                    <option value="Alexandria" data-lat="31.2001" data-lng="29.9187" data-avg="9634">الإسكندرية (10K جنيه/متر)</option>
-                                    <option value="Zamalek" data-lat="30.0659" data-lng="31.2186" data-avg="63777">الزمالك (64K جنيه/متر)</option>
-                                    <option value="Fifth Settlement" data-lat="30.0147" data-lng="31.4139" data-avg="63223">التجمع الخامس (63K جنيه/متر)</option>
-                                    <option value="Maadi" data-lat="29.9598" data-lng="31.2653" data-avg="22649">المعادي (23K جنيه/متر)</option>
-                                    <option value="New Administrative Capital" data-lat="30.0291" data-lng="31.7371" data-avg="33684">العاصمة الإدارية (34K جنيه/متر)</option>
-                                    <option value="Faisal" data-lat="29.9990" data-lng="31.1780" data-avg="11754">الفيصلية (12K جنيه/متر)</option>
-                                    <option value="Nasr City" data-lat="30.0581" data-lng="31.3183" data-avg="25580">مدينة نصر (26K جنيه/متر)</option>
+                                    <option value="New Cairo" data-lat="30.0763" data-lng="31.4815" data-avg="44817">New Cairo (45K EGP/m²)</option>
+                                    <option value="Sheikh Zayed" data-lat="29.9198" data-lng="30.9453" data-avg="39390">Sheikh Zayed (39K EGP/m²)</option>
+                                    <option value="6th of October" data-lat="29.9397" data-lng="30.9419" data-avg="38548">6th of October (39K EGP/m²)</option>
+                                    <option value="Alexandria" data-lat="31.2001" data-lng="29.9187" data-avg="9634">Alexandria (10K EGP/m²)</option>
+                                    <option value="Zamalek" data-lat="30.0659" data-lng="31.2186" data-avg="63777">Zamalek (64K EGP/m²)</option>
+                                    <option value="Fifth Settlement" data-lat="30.0147" data-lng="31.4139" data-avg="63223">Fifth Settlement (63K EGP/m²)</option>
+                                    <option value="Maadi" data-lat="29.9598" data-lng="31.2653" data-avg="22649">Maadi (23K EGP/m²)</option>
+                                    <option value="New Administrative Capital" data-lat="30.0291" data-lng="31.7371" data-avg="33684">New Administrative Capital (34K EGP/m²)</option>
+                                    <option value="Faisal" data-lat="29.9990" data-lng="31.1780" data-avg="11754">Faisal (12K EGP/m²)</option>
+                                    <option value="Nasr City" data-lat="30.0581" data-lng="31.3183" data-avg="25580">Nasr City (26K EGP/m²)</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-bold">📏 المساحة (م²)</label>
+                                <label class="form-label fw-bold" id="areaLabel">📏 Area (m²)</label>
                                 <input type="number" class="form-control" id="area" value="150" min="30" max="1000" required>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-bold">🛏️ عدد الغرف</label>
+                                <label class="form-label fw-bold" id="roomsLabel">🛏️ Rooms</label>
                                 <input type="number" class="form-control" id="rooms" value="3" min="1" max="10" required>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-bold">🏢 الطابق</label>
+                                <label class="form-label fw-bold" id="floorLabel">🏢 Floor</label>
                                 <input type="number" class="form-control" id="floor" value="5" min="1" max="50" required>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-bold">🏠 نوع العقار</label>
+                                <label class="form-label fw-bold" id="typeLabel">🏠 Property Type</label>
                                 <select class="form-select" id="type">
-                                    <option value="شقة">شقة</option>
-                                    <option value="فيلا">فيلا (+10%)</option>
+                                    <option value="Apartment">Apartment</option>
+                                    <option value="Villa">Villa (+10%)</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-bold">⏳ عمر البناء</label>
+                                <label class="form-label fw-bold" id="ageLabel">⏳ Building Age</label>
                                 <input type="number" class="form-control" id="age" value="5" min="0" max="50" required>
                             </div>
                         </div>
                         <div class="text-center mt-4">
-                            <button type="submit" class="btn btn-pred btn-lg text-white">
-                                <i class="fas fa-magic"></i> توقع السعر الذكي
+                            <button type="submit" class="btn btn-pred btn-lg text-white" id="predictBtn">
+                                <i class="fas fa-magic"></i> Predict Smart Price
                             </button>
                         </div>
                     </form>
@@ -191,8 +221,8 @@
             <!-- Interactive Map -->
             <div class="col-lg-5">
                 <div class="glass p-3">
-                    <h5><i class="fas fa-map-marked-alt text-primary"></i> الخريطة التفاعلية</h5>
-                    <p class="small text-muted">اضغط على أي مكان لمعرفة السعر 🗺️</p>
+                    <h5 id="mapTitle"><i class="fas fa-map-marked-alt text-primary"></i> Interactive Map</h5>
+                    <p class="small text-muted" id="mapText">Click anywhere to get price 🗺️</p>
                     <div id="map"></div>
                 </div>
             </div>
@@ -202,14 +232,14 @@
         <div class="row mt-5" id="resultSection" style="display: none;">
             <div class="col-lg-6">
                 <div class="glass p-5 price-card text-center">
-                    <h3 class="mb-4"><i class="fas fa-chart-line"></i> النتيجة النهائية</h3>
+                    <h3 class="mb-4" id="resultTitle"><i class="fas fa-chart-line"></i> Final Result</h3>
                     <div id="resultContent" class="fs-3 fw-bold"></div>
                     <div id="priceComparison" class="mt-3"></div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="glass p-5 chart-container">
-                    <h5><i class="fas fa-chart-bar"></i> مقارنة السعر</h5>
+                    <h5 id="chartTitle"><i class="fas fa-chart-bar"></i> Price Comparison</h5>
                     <div class="chart-wrapper">
                         <canvas id="priceChart"></canvas>
                     </div>
@@ -217,37 +247,36 @@
             </div>
         </div>
 
-        <!-- ✅ Footer محسن فخم مع Icon -->
+        <!-- Footer -->
         <div class="row mt-5">
             <div class="col-12">
                 <div class="footer-section text-center p-5">
-                    <!-- ✅ صورة الملف الشخصي -->
                     <div class="footer-avatar" style="background-image: url('image.png'); background-size: cover; background-position: center;"></div>
                     
-                    <h2 class="mb-4 text-primary fw-bold">
+                    <h2 class="mb-4 text-primary fw-bold" id="footerName">
                         <i class="fas fa-user-engineer"></i> Aqar EG AI
                     </h2>
                     
                     <div class="row mb-4">
                         <div class="col-md-4">
-                            <div class="stats-badge mb-2">
-                                <i class="fas fa-brain"></i> مميذ  AI
+                            <div class="stats-badge mb-2" id="badge1">
+                                <i class="fas fa-brain"></i> AI Expert
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="stats-badge mb-2">
-                                <i class="fas fa-chart-line"></i> محلل عقاري
+                            <div class="stats-badge mb-2" id="badge2">
+                                <i class="fas fa-chart-line"></i> Real Estate Analyst
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="stats-badge">
-                                <i class="fas fa-award"></i> دقة 98.5%
+                            <div class="stats-badge" id="badge3">
+                                <i class="fas fa-award"></i> 98.5% Accuracy
                             </div>
                         </div>
                     </div>
                     
-                    <p class="lead mb-4 text-muted">
-                        | بيانات 2026 محدثة  | خريطة تفاعلية |  
+                    <p class="lead mb-4 text-muted" id="footerDesc">
+                        | Updated 2026 Data | Interactive Map |
                     </p>
                     
                     <div class="social-links mb-4">
@@ -260,11 +289,9 @@
                     </div>
                     
                     <hr class="my-4">
-                    <small class="text-muted">
-                       2026@ HousePrice Predictor |  | 
-                      <i class="fas fa-drafting-compass me-1"></i>
-                     John Amin
-
+                    <small class="text-muted" id="footerCopyright">
+                        © 2026 HousePrice Predictor | Made with ❤️ in Cairo 🇪🇬 | 
+                        <i class="fas fa-drafting-compass me-1"></i> John Amin
                     </small>
                 </div>
             </div>
@@ -274,7 +301,55 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // Global variables
+        // Language configuration
+        const translations = {
+            en: {
+                heroTitle: '<i class="fas fa-city"></i> Know Your Property Value with AI',
+                heroText: 'Get instant property prices across Egypt in seconds ⚡<br><small>98.5% Accuracy | 2026 Updated Data | Interactive Map</small>',
+                formTitle: '<i class="fas fa-calculator text-primary"></i> Smart Price Calculator',
+                regionLabel: '🏙️ Region',
+                areaLabel: '📏 Area (m²)',
+                roomsLabel: '🛏️ Rooms',
+                floorLabel: '🏢 Floor',
+                typeLabel: '🏠 Property Type',
+                ageLabel: '⏳ Building Age',
+                predictBtn: '<i class="fas fa-magic"></i> Predict Smart Price',
+                mapTitle: '<i class="fas fa-map-marked-alt text-primary"></i> Interactive Map',
+                mapText: 'Click anywhere to get price 🗺️',
+                resultTitle: '<i class="fas fa-chart-line"></i> Final Result',
+                chartTitle: '<i class="fas fa-chart-bar"></i> Price Comparison',
+                footerName: '<i class="fas fa-user-engineer"></i> Aqar EG AI',
+                badge1: '<i class="fas fa-brain"></i> AI Expert',
+                badge2: '<i class="fas fa-chart-line"></i> Real Estate Analyst',
+                badge3: '<i class="fas fa-award"></i> 98.5% Accuracy',
+                footerDesc: '| Updated 2026 Data | Interactive Map |',
+                footerCopyright: '© 2026 HousePrice Predictor | Made with ❤️ in Cairo 🇪🇬 | <i class="fas fa-drafting-compass me-1"></i> John Amin'
+            },
+            ar: {
+                heroTitle: '<i class="fas fa-city"></i> اعرف سعر بيتك باستخدام ال AI',
+                heroText: 'اعرف سعر أي عقار في مصر في ثواني بدل ما يغفلوك ⚡<br><small>دقة 98.5% | بيانات 2026 محدثة | خريطة تفاعلية</small>',
+                formTitle: '<i class="fas fa-calculator text-primary"></i> حساب السعر الذكي',
+                regionLabel: '🏙️ المنطقة',
+                areaLabel: '📏 المساحة (م²)',
+                roomsLabel: '🛏️ عدد الغرف',
+                floorLabel: '🏢 الطابق',
+                typeLabel: '🏠 نوع العقار',
+                ageLabel: '⏳ عمر البناء',
+                predictBtn: '<i class="fas fa-magic"></i> توقع السعر الذكي',
+                mapTitle: '<i class="fas fa-map-marked-alt text-primary"></i> الخريطة التفاعلية',
+                mapText: 'اضغط على أي مكان لمعرفة السعر 🗺️',
+                resultTitle: '<i class="fas fa-chart-line"></i> النتيجة النهائية',
+                chartTitle: '<i class="fas fa-chart-bar"></i> مقارنة السعر',
+                footerName: '<i class="fas fa-user-engineer"></i> Aqar EG AI',
+                badge1: '<i class="fas fa-brain"></i> مميذ AI',
+                badge2: '<i class="fas fa-chart-line"></i> محلل عقاري',
+                badge3: '<i class="fas fa-award"></i> دقة 98.5%',
+                footerDesc: '| بيانات 2026 محدثة | خريطة تفاعلية |',
+                footerCopyright: '2026@ HousePrice Predictor | مصنوع بحب في القاهرة 🇪🇬 | <i class="fas fa-drafting-compass me-1"></i> John Amin'
+            }
+        };
+
+        let currentLang = 'en';
         let map, priceChart, predictions = JSON.parse(localStorage.getItem('predictions')) || [];
         
         const regionData = {
@@ -289,6 +364,51 @@
             'Faisal': [29.9990, 31.1780, 11754],
             'Nasr City': [30.0581, 31.3183, 25580]
         };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            const btn = document.getElementById('langBtn');
+            const html = document.documentElement;
+            
+            if (currentLang === 'ar') {
+                html.setAttribute('lang', 'ar');
+                html.setAttribute('dir', 'rtl');
+                btn.innerHTML = '<i class="fas fa-globe"></i> AR';
+                btn.classList.remove('active');
+                document.body.classList.add('rtl');
+            } else {
+                html.setAttribute('lang', 'en');
+                html.setAttribute('dir', 'ltr');
+                btn.innerHTML = '<i class="fas fa-globe"></i> EN';
+                btn.classList.add('active');
+                document.body.classList.remove('rtl');
+            }
+            
+            updateLanguage();
+        }
+
+        function updateLanguage() {
+            document.getElementById('heroTitle').innerHTML = translations[currentLang].heroTitle;
+            document.getElementById('heroText').innerHTML = translations[currentLang].heroText;
+            document.getElementById('formTitle').innerHTML = translations[currentLang].formTitle;
+            document.getElementById('regionLabel').textContent = translations[currentLang].regionLabel;
+            document.getElementById('areaLabel').textContent = translations[currentLang].areaLabel;
+            document.getElementById('roomsLabel').textContent = translations[currentLang].roomsLabel;
+            document.getElementById('floorLabel').textContent = translations[currentLang].floorLabel;
+            document.getElementById('typeLabel').textContent = translations[currentLang].typeLabel;
+            document.getElementById('ageLabel').textContent = translations[currentLang].ageLabel;
+            document.getElementById('predictBtn').innerHTML = translations[currentLang].predictBtn;
+            document.getElementById('mapTitle').innerHTML = translations[currentLang].mapTitle;
+            document.getElementById('mapText').textContent = translations[currentLang].mapText;
+            document.getElementById('resultTitle').innerHTML = translations[currentLang].resultTitle;
+            document.getElementById('chartTitle').innerHTML = translations[currentLang].chartTitle;
+            document.getElementById('footerName').innerHTML = translations[currentLang].footerName;
+            document.getElementById('badge1').innerHTML = translations[currentLang].badge1;
+            document.getElementById('badge2').innerHTML = translations[currentLang].badge2;
+            document.getElementById('badge3').innerHTML = translations[currentLang].badge3;
+            document.getElementById('footerDesc').innerHTML = translations[currentLang].footerDesc;
+            document.getElementById('footerCopyright').innerHTML = translations[currentLang].footerCopyright;
+        }
 
         function initMap() {
             const mapContainer = document.getElementById('map');
@@ -310,10 +430,10 @@
                     fillOpacity: 0.8
                 }).addTo(map)
                 .bindPopup(`
-                    <div style="text-align: right; min-width: 150px;">
+                    <div style="min-width: 150px;">
                         <b>${region}</b><br>
-                        💰 ${avg.toLocaleString()} جنيه/متر<br>
-                        <small style="color: ${color}">● ${color === '#ef4444' ? 'غالي جداً' : color === '#f59e0b' ? 'متوسط' : 'ممتاز'}</small>
+                        💰 ${avg.toLocaleString()} EGP/m²<br>
+                        <small style="color: ${color}">● ${color === '#ef4444' ? 'Very Expensive' : color === '#f59e0b' ? 'Average' : 'Excellent'}</small>
                     </div>
                 `);
             });
@@ -321,7 +441,6 @@
             map.on('click', function(e) {
                 updateFromMap(e.latlng.lat, e.latlng.lng);
             });
-            console.log('✅ Map initialized!');
         }
 
         function getFormData() {
@@ -331,7 +450,7 @@
                 region: option.value,
                 area: parseFloat(document.getElementById('area').value),
                 rooms: parseInt(document.getElementById('rooms').value),
-                type: document.getElementById('type').value,
+                type: document.getElementById('type').value === 'Villa' ? 'فيلا' : 'شقة',
                 age: parseInt(document.getElementById('age').value),
                 floor: parseInt(document.getElementById('floor').value),
                 lat: parseFloat(option.dataset.lat),
@@ -341,7 +460,8 @@
 
         async function predictPrice(formData) {
             const btn = document.querySelector('button[type="submit"]');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحساب...';
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Calculating...';
             btn.disabled = true;
 
             try {
@@ -358,14 +478,13 @@
                     savePrediction(formData, result);
                 }
             } catch (error) {
-                console.error('خطأ:', error);
+                console.error('Error:', error);
             }
 
-            btn.innerHTML = '<i class="fas fa-magic"></i> توقع السعر الذكي';
+            btn.innerHTML = originalText;
             btn.disabled = false;
         }
 
-        // ✅ Chart حجم ثابت نهائي 100%
         function updateChart(result) {
             const canvas = document.getElementById('priceChart');
             const ctx = canvas.getContext('2d');
@@ -374,14 +493,13 @@
                 priceChart.destroy();
             }
             
-            // ✅ قيم آمنة + حد أقصى صارم
             const safePrice = Math.max(5000, Math.min(Number(result.price_per_meter) || 35000, 70000));
             const safeRegionAvg = Math.max(5000, Math.min(Number(result.region_avg) || 40000, 70000));
             
             priceChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['سعرك المتوقع', 'المتوسط في المنطقة'],
+                    labels: [currentLang === 'en' ? 'Your Price' : 'سعرك', currentLang === 'en' ? 'Region Avg' : 'متوسط المنطقة'],
                     datasets: [{
                         data: [safePrice, safeRegionAvg],
                         backgroundColor: ['#3b82f6', '#10b981'],
@@ -392,37 +510,23 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 10,
-                            bottom: 10,
-                            left: 10,
-                            right: 10
-                        }
-                    },
-                    plugins: { 
-                        legend: { display: false }
-                    },
+                    layout: { padding: { top: 10, bottom: 10, left: 10, right: 10 } },
+                    plugins: { legend: { display: false } },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            max: 70000,  // ✅ ثابت نهائياً
+                            max: 70000,
                             min: 0,
                             grid: { color: 'rgba(0,0,0,0.08)' },
                             ticks: {
-                                callback: value => value.toLocaleString() + ' ج.م',
+                                callback: value => value.toLocaleString() + (currentLang === 'en' ? ' EGP' : ' ج.م'),
                                 maxTicksLimit: 7,
                                 stepSize: 10000
                             }
                         },
-                        x: {
-                            grid: { display: false },
-                            ticks: { font: { size: 12 } }
-                        }
+                        x: { grid: { display: false }, ticks: { font: { size: 12 } } }
                     },
-                    animation: {
-                        duration: 1000
-                    }
+                    animation: { duration: 1000 }
                 }
             });
         }
@@ -436,12 +540,12 @@
                 <div class="mb-4">
                     <i class="fas fa-ruler-combined fa-2x mb-3 text-white"></i><br>
                     <span class="fs-2">💰 ${safePrice.toLocaleString()}</span><br>
-                    <small class="text-white-50">سعر المتر</small>
+                    <small class="text-white-50">${currentLang === 'en' ? 'Price per m²' : 'سعر المتر'}</small>
                 </div>
                 <div>
                     <i class="fas fa-home fa-2x mb-3 text-white"></i><br>
-                    <span class="fs-1">${(safePrice * area).toLocaleString()} جنيه</span><br>
-                    <small class="text-white-50">السعر الإجمالي</small>
+                    <span class="fs-1">${(safePrice * area).toLocaleString()} ${currentLang === 'en' ? 'EGP' : 'جنيه'}</span><br>
+                    <small class="text-white-50">${currentLang === 'en' ? 'Total Price' : 'السعر الإجمالي'}</small>
                 </div>
             `;
 
@@ -452,7 +556,8 @@
                 <div class="mt-3 p-2 bg-white bg-opacity-25 rounded">
                     <small class="${diffClass}">
                         <i class="fas fa-chart-line"></i>
-                        مقارنة بالمتوسط: <strong>${parseFloat(diffPercent) > 0 ? '+' : ''}${diffPercent}%</strong>
+                        ${currentLang === 'en' ? 'Compared to average:' : 'مقارنة بالمتوسط:'} 
+                        <strong>${parseFloat(diffPercent) > 0 ? '+' : ''}${diffPercent}%</strong>
                     </small>
                 </div>
             `;
@@ -462,7 +567,7 @@
         }
 
         function savePrediction(formData, result) {
-            const prediction = { ...formData, ...result, timestamp: new Date().toLocaleString('ar-EG') };
+            const prediction = { ...formData, ...result, timestamp: new Date().toLocaleString(currentLang === 'en' ? 'en-US' : 'ar-EG') };
             predictions.unshift(prediction);
             predictions = predictions.slice(0, 5);
             localStorage.setItem('predictions', JSON.stringify(predictions));
@@ -476,7 +581,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 App initializing...');
             setTimeout(initMap, 200);
             
             document.getElementById('predictForm').addEventListener('submit', function(e) {
@@ -490,8 +594,6 @@
                     map.setView([parseFloat(option.dataset.lat), parseFloat(option.dataset.lng)], 13);
                 }
             });
-            
-            console.log('✅ App ready!');
         });
     </script>
 </body>
